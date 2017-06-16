@@ -22,6 +22,8 @@ script :
   - ./tag.sh
   - wget --progress=dot:mega https://yanntm.github.io/Spot-BinaryBuilds/spot_linux.tar.gz
   - tar xzf spot_linux.tar.gz
+  # This line to patch moved .la and .pc files that configure paths for linking in LTSmin/pkgconfig
+  - export TARGET=$(pwd) ; cd usr/local/lib/pkgconfig/ ;  for i in *.pc ; do cat $i | sed  "s#=.*/usr/local#=$TARGET/usr/local#g" > tmp ; \mv tmp $i ; done ; cd ..;  for i in *.la ; do cat $i | sed  "s#='.*/usr/local#='$TARGET/usr/local#g" > tmp ; \mv tmp $i ; done  ; cd ../../.. 
   - ./build_ltsmin.sh
   - ls -lah website/
 
