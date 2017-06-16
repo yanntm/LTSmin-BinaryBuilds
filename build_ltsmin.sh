@@ -165,19 +165,21 @@ cd ltl2ba
 git clone https://github.com/utwente-fmt/ltl2ba.git --branch master --single-branch .
 cd ..
 
-# travis does not have automake 1.14 available, does not matter much 
-cat configure.ac | sed 's/1\.14/1.11/' | grep -v 'AX_PROG_BISON_VERSION' > conf.bak ; \mv conf.bak configure.ac
+cd src/pins-lib
+cat pins-impl.h | sed 's/SPEC_MT_SAFE 0/SPEC_MT_SAFE 1/g' > toto ; \mv toto pins-impl.h
+cd ../..
+
 
 # CPPFLAGS='-I%system.pkg64.libboost.path%/include' LDFLAGS='-L%system.pkg64.libboost.path%/lib' VALGRIND=false
 
-export SPOTCFLAGS="-I$ROOTDIR/install_dir/local/include/ $SPOTCFLAGS"
-export PKG_CONFIG_PATH="$ROOTDIR/install_dir/usr/local/lib/pkgconfig/:$ROOTDIR/dep_dir/lib/pkgconfig/:$ROOTDIR/dep_dir/lib64/pkgconfig/"
+export SPOTCFLAGS="-I$ROOTDIR/usr/local/include/"
+export PKG_CONFIG_PATH="$ROOTDIR/usr/local/lib/pkgconfig/:$ROOTDIR/dep_dir/lib/pkgconfig/:$ROOTDIR/dep_dir/lib64/pkgconfig/"
 
 ./ltsminreconf &&
 ./configure --prefix=$IFOLDER --with-viennacl="$DEPFOLDER/include" --without-scoop --disable-sylvan --without-mcrl --without-mcrl2 --disable-opaal --disable-prob --without-pnml --without-spins  --disable-dist --without-doxygen $CONFIGURE_WITH
 
 
-make LDFLAGS="-L$DEPFOLDER/static-libs -L$DEPFOLDER/lib/ -L$DEPFOLDER/lib64/ -L$ROOTDIR/install_dir/local/lib/ -static-libgcc -static-libstdc++"
+make LDFLAGS="-L$DEPFOLDER/static-libs -L$DEPFOLDER/lib/ -L$DEPFOLDER/lib64/ -L$ROOTDIR/usr/local/lib/ -static -all-static -static-libgcc -static-libstdc++"
 
 make install 
 # cp "$DEPFOLDER/bin/divine" /tmp/dist/bin &&
