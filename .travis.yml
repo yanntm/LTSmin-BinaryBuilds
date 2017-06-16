@@ -1,9 +1,6 @@
 dist: trusty
 sudo: false
 
-
-language : python
-
 addons:
   apt:
     sources: ['ubuntu-toolchain-r-test', 'hvr-ghc', 'george-edison55-precise-backports' ]   # ge-55 : CMake
@@ -23,7 +20,8 @@ before_script:
 # build spot
 script :
   - ./tag.sh
-  - ./build_spot.sh
+  - wget --progress=dot:mega https://yanntm.github.io/Spot-BinaryBuilds/spot_linux.tar.gz
+  - tar xzf spot_linux.tar.gz
   - ./build_ltsmin.sh
   - ls -lah website/
 
@@ -37,5 +35,4 @@ deploy:
     branch: master
   
 after_deploy:
-  - curl -s -X POST -H "Content-Type:application/json" -H "Accept:application/json"   -H "Travis-API-Version:3" -H "Authorization:token $APITOKEN" -d '{"request":{"message":"Triggered by ITS Tools Dependencies build.","branch":"master"}}' https://api.travis-ci.org/repo/lip6%2FITS-LTL/requests
-  - curl -s -X POST -H "Content-Type:application/json" -H "Accept:application/json"   -H "Travis-API-Version:3" -H "Authorization:token $APITOKEN" -d '{"request":{"message":"Triggered by ITS Tools Dependencies build.","branch":"master"}}' https://api.travis-ci.org/repo/yanntm%2FITS-Tools-pnmcc/requests
+  - curl -s -X POST -H "Content-Type:application/json" -H "Accept:application/json"   -H "Travis-API-Version:3" -H "Authorization:token $APITOKEN" -d '{"request":{"message":"Triggered by LTSmin build.","branch":"master"}}' https://api.travis-ci.org/repo/yanntm%2FITS-Tools-pnmcc/requests

@@ -1,28 +1,34 @@
-<h1>Download page for ITS Tools dependencies </h1>
+<h1>Download page for LTSmin binary packages </h1>
 
 <p>
 This page hosts content built on : DATETIME.
 </p>
 
 <p>
-This page hosts content regularly rebuilt using the continuous integration service Travis.
-This page hosts these dependencies for ITS-Tools : 
+Download the latest artifacts here for LTSmin : <a href="./ltsmin_linux_64.tar.gz"> LTSmin latest artifacts for linux </a>. <br/>
+</p>
+
+<p>
+This page hosts content regularly rebuilt using the continuous integration service <a href="http://travis-ci.com">Travis</a>.
+We are particularly grateful to these companies for supporting quality open source by providing us these services for free.
+</p>
+
+
+<p>
+This page hosts binaries used in our tool chains, and built from LTSmin, from the FMT group based in Twente, NL : 
 <ul>
-<li>Spot (see <a href="https://spot.lrde.epita.fr/">Spot homepage</a>)</li>
 <li>LTSmin (see <a href="http://fmt.cs.utwente.nl/tools/ltsmin/">LTSmin homepage</a>)</li>
 </ul>
-These artifacts are not necessarily very portable, they're used in our build system and are specific to a docker hosted on travis-ci.
+These artifacts are not very portable, they're used in our build system, so are specific to the versions (gcc, glibc...) that live on travis-ci (Linux, OSX targets) or AppVeyor (Windows target).
+The build is configured to only build what we depend upon, we don't aim to build all of LTsmin in this build.
 </p>
+
 <p>
-Both of these software are free open source packages. 
+This software is a free open source package, visit LTSmin homepage for license information.
+</p>
+
+
+<p>
 Please see the sources of this project to see exactly how we build them on Travis and AppVeyor.
 </p>
 
-<p>
-Download the latest Spot binaries for linux x64 : <a href="./spot_linux_64.tar.gz"> Spot for Linux latest</a>. <br/>
-Note that this executable is statically linked and should work without any further installation.
-</p>
-
-<p>
-Download the latest artifacts here for LTSmin : <a href="./ltsmin_linux_64.tar.gz"> LTSmin latest artifacts for linux </a>. <br/>
-</p>

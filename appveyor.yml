@@ -1,3 +1,5 @@
+# TODO : this file is not used currently : adapt for LTSmin
+
 build:
   verbosity: minimal
 
