@@ -171,7 +171,7 @@ cd ../..
 
 # Hack for Memory mismeasured on containers
 cd src/hre
-cat hre_runtime.c | grep -v 'long res=sysconf(_SC_PHYS_PAGES);' | grep -v  'size_t pagesz=RTpageSize();' | sed 's#return pagesz\*((size_t)res);#return 4<<30;#' > tmp ; \mv tmp hre_runtime.c
+cat hre_runtime.c | grep -v 'long res=sysconf(_SC_PHYS_PAGES);' | grep -v  'size_t pagesz=RTpageSize();' | sed 's#return pagesz\*((size_t)res);#return ((size_t) 4 )<<30;#' > tmp ; \mv tmp hre_runtime.c
 cd ../..
 
 # CPPFLAGS='-I%system.pkg64.libboost.path%/include' LDFLAGS='-L%system.pkg64.libboost.path%/lib' VALGRIND=false
