@@ -169,10 +169,14 @@ cd src/pins-lib
 cat pins-impl.h | sed 's/SPEC_MT_SAFE 0/SPEC_MT_SAFE 1/g' > toto ; \mv toto pins-impl.h
 cd ../..
 
-# Hack for Memory mismeasured on containers
-cd src/hre
-cat hre_runtime.c | grep -v 'long res=sysconf(_SC_PHYS_PAGES);' | grep -v  'size_t pagesz=RTpageSize();' | sed 's#return pagesz\*((size_t)res);#return ((size_t) 4 )<<30;#' > tmp ; \mv tmp hre_runtime.c
-cd ../..
+# configure LTSmin to use a maximum of 4GB of memory, this is neccessary
+# because sysconf does not work in docker.
+export LTSMIN_MEM_SIZE=$((4<<30))
+ 
+# Previous Hack for Memory mismeasured on containers
+#cd src/hre
+#cat hre_runtime.c | grep -v 'long res=sysconf(_SC_PHYS_PAGES);' | grep -v  'size_t pagesz=RTpageSize();' | sed 's#return pagesz\*((size_t)res);#return ((size_t) 4 )<<30;#' > tmp ; \mv tmp hre_runtime.c
+#cd ../..
 
 # CPPFLAGS='-I%system.pkg64.libboost.path%/include' LDFLAGS='-L%system.pkg64.libboost.path%/lib' VALGRIND=false
 
