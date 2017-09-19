@@ -184,7 +184,7 @@ export SPOTCFLAGS="-I$ROOTDIR/usr/local/include/"
 export PKG_CONFIG_PATH="$ROOTDIR/usr/local/lib/pkgconfig/:$ROOTDIR/dep_dir/lib/pkgconfig/:$ROOTDIR/dep_dir/lib64/pkgconfig/"
 
 ./ltsminreconf &&
-./configure --prefix=$IFOLDER --with-viennacl="$DEPFOLDER/include" --without-scoop --disable-sylvan --without-mcrl --without-mcrl2 --disable-opaal --disable-prob --without-pnml --without-spins  --disable-dist --without-doxygen $CONFIGURE_WITH
+./configure --prefix=$IFOLDER --with-viennacl="$DEPFOLDER/include" --disable-scoop --disable-sylvan --without-mcrl --without-mcrl2 --disable-opaal --disable-prob --disable-pnml --without-spins  --disable-dist --without-doxygen $CONFIGURE_WITH
 
 
 make LDFLAGS="-L$DEPFOLDER/static-libs -L$DEPFOLDER/lib/ -L$DEPFOLDER/lib64/ -L$ROOTDIR/usr/local/lib/ -static-libgcc -static-libstdc++"
