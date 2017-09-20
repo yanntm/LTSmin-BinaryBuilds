@@ -11,7 +11,8 @@ cd ..
 
 # file based on .travis.yml of ltsmin project
 export CONFIGURE_WITH="--disable-dependency-tracking --disable-test-all"
-export CFLAGS="-DNDEBUG -O2"
+# export CFLAGS="-DNDEBUG -O2"
+export CFLAGS="-g -O0"
 export RELEASE_BUILD="yes"
 
 export CZMQ_VERSION="3.0.2" &&
