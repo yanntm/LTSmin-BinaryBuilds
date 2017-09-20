@@ -13,6 +13,10 @@ cd ..
 export CONFIGURE_WITH="--disable-dependency-tracking --disable-test-all"
 # export CFLAGS="-DNDEBUG -O2"
 export CFLAGS="-g -O0"
+export CPPFLAGS="-g -O0"
+export CXXFLAGS="-g -O0"
+export LDFLAGS="-g -O0"
+
 export RELEASE_BUILD="yes"
 
 export CZMQ_VERSION="3.0.2" &&
