@@ -12,10 +12,10 @@ cd ..
 # file based on .travis.yml of ltsmin project
 export CONFIGURE_WITH="--disable-dependency-tracking --disable-test-all"
 # export CFLAGS="-DNDEBUG -O2"
-export CFLAGS="-g -O0"
-export CPPFLAGS="-g -O0"
-export CXXFLAGS="-g -O0"
-export LDFLAGS="-g -O0"
+export CFLAGS="-g -O2"
+export CPPFLAGS="-g -O2"
+export CXXFLAGS="-g -O2"
+export LDFLAGS="-g -O2"
 
 export RELEASE_BUILD="yes"
 
