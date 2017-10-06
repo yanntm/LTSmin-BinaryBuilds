@@ -4,14 +4,14 @@ sudo: false
 addons:
   apt:
     sources: ['ubuntu-toolchain-r-test', 'hvr-ghc', 'george-edison55-precise-backports' ]   # ge-55 : CMake
-    packages: ['g++-5', 'gcc-5', 'expat', 'libgmp-dev', 'libpopt-dev', 'libboost-dev', 'flex', 'bison', 'libnuma-dev', 'liblzma-dev', 'dejagnu', 'libhwloc-dev', 'cmake', 'cmake-data']
+    packages: ['g++-7', 'gcc-7', 'expat', 'libgmp-dev', 'libpopt-dev', 'libboost-dev', 'flex', 'bison', 'libnuma-dev', 'liblzma-dev', 'dejagnu', 'libhwloc-dev', 'cmake', 'cmake-data']
     
 # add 'asciidoc', 'xmlto', 'doxygen' for doc generation
 # add 'ghc-7.10.3', 'ghc-7.10.3-dyn', 'happy-1.19.5', for SCOOP
 
 before_script:
   - cd ${TRAVIS_BUILD_DIR}
-  - export GCCVER='5'
+  - export GCCVER='7'
   - export CXX=g++-${GCCVER}
   - export CC=gcc-${GCCVER}
   - export AR=gcc-ar-${GCCVER}
