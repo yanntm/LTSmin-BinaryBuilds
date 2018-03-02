@@ -165,9 +165,9 @@ popd
 
 mkdir ltsmin
 cd ltsmin
-git clone https://github.com/utwente-fmt/ltsmin.git --branch next --single-branch .
+git clone --depth 1 https://github.com/utwente-fmt/ltsmin.git --branch master --single-branch .
 cd ltl2ba
-git clone https://github.com/utwente-fmt/ltl2ba.git --branch master --single-branch .
+git clone --depth 1 https://github.com/utwente-fmt/ltl2ba.git --branch master --single-branch .
 cd ..
 
 cd src/pins-lib
