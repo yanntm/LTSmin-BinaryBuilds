@@ -215,6 +215,7 @@ pwd
 ls 
 if [ -f lts_install_dir/bin/pins2lts-seq ]; then
 	cd lts_install_dir/bin ; mkdir pp ; \rm *-dist *-sym pins2torx ; mv pins2* pp/ ; mv ltl2* pp/ ; \rm * ; mv pp/* . ; rm -rf pp/ ; for i in * ; do strip $i ; done; cd ../..
+	cd lts_install_dir/include ; cp /usr/include/popt.h . ; cd ../..
 	tar czvf ltsmin_linux_64.tar.gz lts_install_dir/
 	cp ltsmin_linux_64.tar.gz website/
 else 
