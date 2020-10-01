@@ -166,8 +166,8 @@ popd
 mkdir ltsmin
 cd ltsmin
 # this includes patches that are not merged yet.
-# git clone --depth 1 https://github.com/yanntm/ltsmin.git --branch master --single-branch .
-git clone --depth 1 https://github.com/utwente-fmt/ltsmin.git --branch master --single-branch .
+git clone --depth 1 https://github.com/yanntm/ltsmin.git --branch master --single-branch .
+#git clone --depth 1 https://github.com/utwente-fmt/ltsmin.git --branch master --single-branch .
 #git clone --depth 1 https://github.com/alaarman/ltsmin.git --branch master --single-branch .
 cd ltl2ba
 git clone --depth 1 https://github.com/utwente-fmt/ltl2ba.git --branch master --single-branch .
