@@ -1,0 +1,33 @@
+name: Linux Build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2.3.4
+    - name: Install packages
+      run: sudo apt-get install expat libgmp-dev libpopt-dev libboost-dev flex bison libnuma-dev liblzma-dev dejagnu libhwloc-dev cmake cmake-data
+    - name: tag version date
+      run: ./tag.sh
+    - name: grab spot
+      run: wget --progress=dot:mega https://yanntm.github.io/Spot-BinaryBuilds/spot_linux.tar.gz && tar xzf spot_linux.tar.gz
+    - name: patch spot .pc
+      run: export TARGET=$(pwd) ; cd usr/local/lib/pkgconfig/ ;  for i in *.pc ; do cat $i | sed  "s#=.*/usr/local#=$TARGET/usr/local#g" > tmp ; \mv tmp $i ; done ; cd ..;  for i in *.la ; do cat $i | sed  "s#='.*/usr/local#='$TARGET/usr/local#g" > tmp ; \mv tmp $i ; done  ; cd ../../..
+    - name: build ltsmin
+      run: ./build_ltsmin.sh
+    - name: list built files
+      run: ls -lah website/
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@4.1.3
+      with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: website/ # The folder the action should deploy.
+          clean: true # Automatically remove deleted files from the deploy branch 
+          single-commit: true
