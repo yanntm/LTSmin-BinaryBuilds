@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v2.4.0
+    - uses: actions/checkout@v3
     - name: Install packages
       run: sudo apt-get install expat libgmp-dev libpopt-dev libboost-dev flex bison libnuma-dev liblzma-dev dejagnu libhwloc-dev cmake cmake-data
     - name: tag version date
