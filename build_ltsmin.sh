@@ -165,10 +165,12 @@ popd
 
 mkdir ltsmin
 cd ltsmin
+# Etienne has patches to read HOA instead of formulas
+git clone --depth 1 https://github.com/etienne-renault/ltsmin.git --branch master --single-branch .
 # this includes patches that are not merged yet.
 #git clone --depth 1 https://github.com/yanntm/ltsmin.git --branch master --single-branch .
 # official repo
-git clone --depth 1 https://github.com/utwente-fmt/ltsmin.git --branch master --single-branch .
+#git clone --depth 1 https://github.com/utwente-fmt/ltsmin.git --branch master --single-branch .
 # alfons's version sometimes has more features
 #git clone --depth 1 https://github.com/alaarman/ltsmin.git --branch master --single-branch .
 cd ltl2ba
