@@ -6,7 +6,8 @@ The built binaries are available here : https://yanntm.github.io/LTSmin-BinaryBu
 
 ### Acknowledgements
 
-This packaging/CI code is made freely available with a do as you like APL.
+This packaging/CI code is made freely available with no restrictions.
 
 Packaging by Yann Thierry-Mieg, working at LIP6, Sorbonne Université.
 
+(c) 2015-2022 Yann Thierry-Mieg
