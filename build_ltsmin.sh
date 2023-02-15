@@ -35,7 +35,7 @@ export ZMQ_URL="https://github.com/zeromq/zeromq4-1/releases/download/v$ZMQ_VERS
 export DDD_NAME="ddd" &&
 export DDD_VERSION="$DDD_NAME-1.8.1" &&
 export DDD_URL="http://ddd.lip6.fr/download/$DDD_VERSION.tar.gz" &&
-export SYLVAN_VERSION="1.7.1" &&
+export SYLVAN_VERSION="1.5.0" &&
 export SYLVAN_URL="https://github.com/trolando/sylvan/archive/refs/tags/v$SYLVAN_VERSION.tar.gz" &&
 export SYLVAN_NAME="sylvan-$SYLVAN_VERSION" &&
 export MCRL2_NAME="mCRL2.tar.gz" &&
@@ -60,6 +60,7 @@ if [ ! -f "$DEPFOLDER/lib64/libsylvan.a" ]; then
     wget --progress=dot:mega "$SYLVAN_URL" &&
     tar -xf "v$SYLVAN_VERSION.tar.gz" &&
     cd sylvan-$SYLVAN_VERSION &&
+    wget https://github.com/trolando/sylvan/raw/master/src/sha2.c && mv sha2.c src/ &&
     mkdir -p build &&
     cd build &&
     cmake .. -DBUILD_SHARED_LIBS=OFF -DSYLVAN_BUILD_EXAMPLES=OFF -DCMAKE_INSTALL_PREFIX="$DEPFOLDER" &&
