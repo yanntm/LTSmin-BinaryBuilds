@@ -196,6 +196,8 @@ export LTSMIN_MEM_SIZE=$((4<<30))
 export SPOTCFLAGS="-I$ROOTDIR/usr/local/include/"
 export PKG_CONFIG_PATH="$ROOTDIR/usr/local/lib/pkgconfig/:$ROOTDIR/dep_dir/lib/pkgconfig/:$ROOTDIR/dep_dir/lib64/pkgconfig/"
 
+export CXXFLAGS=-std=c++17
+
 ./ltsminreconf &&
 ./configure -prefix=$IFOLDER --with-viennacl="$DEPFOLDER/include" --disable-scoop --without-mcrl --without-mcrl2 --disable-opaal --disable-prob --without-spins  --disable-dist --without-doxygen $CONFIGURE_WITH
 
