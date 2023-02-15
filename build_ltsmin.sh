@@ -35,8 +35,8 @@ export ZMQ_URL="https://github.com/zeromq/zeromq4-1/releases/download/v$ZMQ_VERS
 export DDD_NAME="ddd" &&
 export DDD_VERSION="$DDD_NAME-1.8.1" &&
 export DDD_URL="http://ddd.lip6.fr/download/$DDD_VERSION.tar.gz" &&
-export SYLVAN_VERSION="1.1.1" &&
-export SYLVAN_URL="https://github.com/trolando/sylvan/archive/v$SYLVAN_VERSION.tar.gz" &&
+export SYLVAN_VERSION="1.7.1" &&
+export SYLVAN_URL="https://github.com/trolando/sylvan/archive/refs/tags/v$SYLVAN_VERSION.tar.gz" &&
 export SYLVAN_NAME="sylvan-$SYLVAN_VERSION" &&
 export MCRL2_NAME="mCRL2.tar.gz" &&
 export MCRL2_URL="https://raw.githubusercontent.com/utwente-fmt/ltsmin-travis/master/$TRAVIS_OS_NAME/$MCRL2_NAME" &&
@@ -55,19 +55,19 @@ export C_INCLUDE_PATH="$DEPFOLDER/include:$C_INCLUDE_PATH"
 export LD_LIBRARY_PATH="$DEPFOLDER/lib:$LD_LIBRARY_PATH"
 
 # install Sylvan from source
-#if [ ! -f "$DEPFOLDER/lib64/libsylvan.a" ]; then
-#    mkdir -p sylvan && cd sylvan &&
-#    wget --progress=dot:mega "$SYLVAN_URL" &&
-#    tar -xf "v$SYLVAN_VERSION.tar.gz" &&
-#    cd sylvan-$SYLVAN_VERSION &&
-#    mkdir -p build &&
-#    cd build &&
-#    cmake .. -DBUILD_SHARED_LIBS=OFF -DSYLVAN_BUILD_EXAMPLES=OFF -DCMAKE_INSTALL_PREFIX="$DEPFOLDER" &&
-#    make &&
-#    make install &&
-#    cd ../../..; 
-#fi
-#
+if [ ! -f "$DEPFOLDER/lib64/libsylvan.a" ]; then
+    mkdir -p sylvan && cd sylvan &&
+    wget --progress=dot:mega "$SYLVAN_URL" &&
+    tar -xf "v$SYLVAN_VERSION.tar.gz" &&
+    cd sylvan-$SYLVAN_VERSION &&
+    mkdir -p build &&
+    cd build &&
+    cmake .. -DBUILD_SHARED_LIBS=OFF -DSYLVAN_BUILD_EXAMPLES=OFF -DCMAKE_INSTALL_PREFIX="$DEPFOLDER" &&
+    make &&
+    make install &&
+    cd ../../..; 
+fi
+
 
 # ZMQ/CZMQ is for PROB frontend    
 ## install zmq from source, since libzmq3-dev in apt is missing dependencies for a full static LTSmin build (pgm and sodium are missing)
@@ -168,9 +168,9 @@ cd ltsmin
 # Etienne has patches to read HOA instead of formulas
 #git clone --depth 1 https://github.com/etienne-renault/ltsmin.git --branch master --single-branch .
 # this includes patches that are not merged yet.
-git clone --depth 1 https://github.com/yanntm/ltsmin.git --branch master --single-branch .
+# git clone --depth 1 https://github.com/yanntm/ltsmin.git --branch master --single-branch .
 # official repo
-#git clone --depth 1 https://github.com/utwente-fmt/ltsmin.git --branch master --single-branch .
+git clone --depth 1 https://github.com/utwente-fmt/ltsmin.git --branch master --single-branch .
 # alfons's version sometimes has more features
 #git clone --depth 1 https://github.com/alaarman/ltsmin.git --branch master --single-branch .
 cd ltl2ba
@@ -196,7 +196,7 @@ export SPOTCFLAGS="-I$ROOTDIR/usr/local/include/"
 export PKG_CONFIG_PATH="$ROOTDIR/usr/local/lib/pkgconfig/:$ROOTDIR/dep_dir/lib/pkgconfig/:$ROOTDIR/dep_dir/lib64/pkgconfig/"
 
 ./ltsminreconf &&
-./configure -prefix=$IFOLDER --with-viennacl="$DEPFOLDER/include" --disable-scoop --disable-sylvan --without-mcrl --without-mcrl2 --disable-opaal --disable-prob --disable-pnml --without-spins  --disable-dist --without-doxygen $CONFIGURE_WITH
+./configure -prefix=$IFOLDER --with-viennacl="$DEPFOLDER/include" --disable-scoop --without-mcrl --without-mcrl2 --disable-opaal --disable-prob --disable-pnml --without-spins  --disable-dist --without-doxygen $CONFIGURE_WITH
 
 
 make LDFLAGS="-L$DEPFOLDER/static-libs -L$DEPFOLDER/lib/ -L$DEPFOLDER/lib64/ -L$ROOTDIR/usr/local/lib/ -static-libgcc -static-libstdc++"
@@ -218,7 +218,7 @@ pushd $ROOTDIR
 pwd
 ls 
 if [ -f lts_install_dir/bin/pins2lts-seq ]; then
-	cd lts_install_dir/bin ; mkdir pp ; \rm *-dist *-sym pins2torx ; mv pins2* pp/ ; mv ltl2* pp/ ; \rm * ; mv pp/* . ; rm -rf pp/ ; for i in * ; do strip $i ; done; cd ../..
+	cd lts_install_dir/bin ; mkdir pp ; mv pnml* pp/ ;\rm *-dist *-sym pins2torx ; mv pins2* pp/ ; mv ltl2* pp/ ; \rm * ; mv pp/* . ; rm -rf pp/ ; for i in * ; do strip $i ; done; cd ../..
 	cd lts_install_dir/include ; cp /usr/include/popt.h . ; cd ../..
 	tar czvf ltsmin_linux_64.tar.gz lts_install_dir/
 	cp ltsmin_linux_64.tar.gz website/
