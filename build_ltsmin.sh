@@ -155,7 +155,7 @@ cp /usr/lib/libnuma.a "$DEPFOLDER/static-libs" &&
 cp /usr/lib/x86_64-linux-gnu/libpopt.a "$DEPFOLDER/static-libs" &&
 cp /usr/lib/x86_64-linux-gnu/libgmp.a "$DEPFOLDER/static-libs" &&
 cp /usr/lib/x86_64-linux-gnu/libltdl.a "$DEPFOLDER/static-libs" &&
-cp /usr/lib/x86_64-linux-gnu/libxml2.a "$DEPFOLDER/static-libs" &&
+cp "$DEPFOLDER/lib/libxml2.a" "$DEPFOLDER/static-libs" &&
 cp /usr/lib/x86_64-linux-gnu/libz.a "$DEPFOLDER/static-libs" && 
 cp /usr/lib/x86_64-linux-gnu/liblzma.a "$DEPFOLDER/static-libs" ;
 
