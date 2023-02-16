@@ -44,7 +44,13 @@ export PKG_CONFIG_PATH="$DEPFOLDER/lib/pkgconfig:$DEPFOLDER/lib64/pkgconfig"
 export PROB_NAME="ProB.linux64.tar.gz" &&
 export PROB_URL="https://raw.githubusercontent.com/utwente-fmt/ltsmin-travis/master/linux/$PROB_NAME" &&        
 export PATH=/opt/ghc/$GHCVER/bin:/opt/happy/$HAPPYVER/bin:$PATH &&
-export MAKEFLAGS=-j2
+export MAKEFLAGS=-j2 &&
+export XML2_VERSION="2.10.1" &&
+export XML2_URL="https://github.com/GNOME/libxml2/archive/refs/tags/v$XML2_VERSION.tar.gz" &&
+export XML2_NAME="libxml2-$XML2_VERSION" 
+
+
+
 
 # export necessary variables
 # bin
@@ -67,6 +73,19 @@ if [ ! -f "$DEPFOLDER/lib64/libsylvan.a" ]; then
     make &&
     make install &&
     cd ../../..; 
+fi
+
+
+# install libxml2
+if [ ! -f "$DEPFOLDER/lib/libxml2.a" ]; then
+    mkdir -p xml2 && cd xml2 &&
+    wget --progress=dot:mega "$XML2_URL" &&
+    tar -xf "v$XML2_VERSION.tar.gz" &&
+    cd $XML2_NAME && autoreconf -vfi &&
+    ./configure --prefix=$DEPFOLDER --enable-static --without-iconv &&
+    make &&
+    make install &&
+    cd ../..; 
 fi
 
 
