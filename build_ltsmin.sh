@@ -221,6 +221,8 @@ export CXXFLAGS=-std=c++17
 ./ltsminreconf &&
 ./configure -prefix=$IFOLDER --with-viennacl="$DEPFOLDER/include" --disable-scoop --without-mcrl --without-mcrl2 --disable-opaal --disable-prob --without-spins  --disable-dist --without-doxygen $CONFIGURE_WITH
 
+# patch crashes from Boost when compiled with -O2
+cd src/dm/ ; sed -i 's/-O2/-O0/g' Makefile ; cd ../..
 
 make LDFLAGS="-L$DEPFOLDER/static-libs -L$DEPFOLDER/lib/ -L$DEPFOLDER/lib64/ -L$ROOTDIR/usr/local/lib/ -llzma -all-static -static-libgcc -static-libstdc++"
 
