@@ -202,7 +202,7 @@ export CXXFLAGS=-std=c++17
 ./configure -prefix=$IFOLDER --with-viennacl="$DEPFOLDER/include" --disable-scoop --without-mcrl --without-mcrl2 --disable-opaal --disable-prob --without-spins  --disable-dist --without-doxygen $CONFIGURE_WITH
 
 
-make LDFLAGS="-L$DEPFOLDER/static-libs -L$DEPFOLDER/lib/ -L$DEPFOLDER/lib64/ -L$ROOTDIR/usr/local/lib/ -all-static -static-libgcc -static-libstdc++"
+make LDFLAGS="-L$DEPFOLDER/static-libs -L$DEPFOLDER/lib/ -L$DEPFOLDER/lib64/ -L$ROOTDIR/usr/local/lib/ -llzma -all-static -static-libgcc -static-libstdc++"
 
 make install 
 # cp "$DEPFOLDER/bin/divine" /tmp/dist/bin &&
