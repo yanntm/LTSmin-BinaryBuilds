@@ -198,9 +198,8 @@ cd ltl2ba
 git clone --depth 1 https://github.com/utwente-fmt/ltl2ba.git --branch master --single-branch .
 cd ..
 
-cd src/pins-lib
-cat pins-impl.h | sed 's/SPEC_MT_SAFE 0/SPEC_MT_SAFE 1/g' > toto ; \mv toto pins-impl.h
-cd ../..
+# edit MTSAFE : pnml is NOT MT safe (in LTL at least), but DLL (in our scenario) is.
+cp ../patch/pins-impl.h src/pins-lib
 
 # configure LTSmin to use a maximum of 4GB of memory, this is neccessary
 # because sysconf does not work in docker.
