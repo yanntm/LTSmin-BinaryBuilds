@@ -223,7 +223,9 @@ export CXXFLAGS=-std=c++17
 # patch crashes from Boost when compiled with -O2
 cd src/dm/ ; sed -i 's/-O2/-O0/g' Makefile ; cd ../..
 
-make LDFLAGS="-L$DEPFOLDER/static-libs -L$DEPFOLDER/lib/ -L$DEPFOLDER/lib64/ -L$ROOTDIR/usr/local/lib/ -llzma -all-static -static-libgcc -static-libstdc++"
+make LDFLAGS="-L$DEPFOLDER/static-libs -L$DEPFOLDER/lib/ -L$DEPFOLDER/lib64/ -L$ROOTDIR/usr/local/lib/ -llzma -static-libgcc -static-libstdc++"
+# unfortunately this flag does not interact well with dlopen used in pins2lts-* tools
+# -all-static 
 
 make install 
 # cp "$DEPFOLDER/bin/divine" /tmp/dist/bin &&
