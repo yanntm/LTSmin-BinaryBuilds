@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-20.04
     
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Install packages
       run: sudo apt-get clean ; sudo apt-get update ; sudo apt-get install expat libgmp-dev libpopt-dev libboost-dev flex bison libnuma-dev liblzma-dev dejagnu libhwloc-dev cmake cmake-data libxml2-dev libicu-dev
     - name: tag version date
