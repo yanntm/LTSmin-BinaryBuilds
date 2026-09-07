@@ -5,15 +5,32 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+  # Rebuilds are push-driven on purpose; this only allows a manual run from the
+  # Actions tab when upstream LTSmin, Spot or Sylvan have moved.
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
-    
+    # Pinned, not ubuntu-latest: these binaries are consumed by ITS-Tools and
+    # MCC-drivers on other machines, so we want a known glibc floor rather than
+    # whatever the newest runner happens to be. cluster.lip6.fr is Debian 13
+    # (glibc 2.41) and ubuntu-24.04 builds against glibc 2.39, so it runs there.
+    runs-on: ubuntu-24.04
+
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     - name: Install packages
-      run: sudo apt-get clean ; sudo apt-get update ; sudo apt-get install expat libgmp-dev libpopt-dev libboost-dev flex bison libnuma-dev liblzma-dev dejagnu libhwloc-dev cmake cmake-data libxml2-dev libicu-dev
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y expat libgmp-dev libpopt-dev libboost-dev flex bison \
+          libnuma-dev liblzma-dev dejagnu libhwloc-dev cmake cmake-data libxml2-dev libicu-dev
     - name: tag version date
       run: ./tag.sh
     - name: grab spot
@@ -22,12 +39,14 @@ jobs:
       run: export TARGET=$(pwd) ; cd usr/local/lib/pkgconfig/ ;  for i in *.pc ; do cat $i | sed  "s#=.*/usr/local#=$TARGET/usr/local#g" > tmp ; \mv tmp $i ; done ; cd ..;  for i in *.la ; do cat $i | sed  "s#='.*/usr/local#='$TARGET/usr/local#g" > tmp ; \mv tmp $i ; done  ; cd ../../..
     - name: build ltsmin
       run: ./build_ltsmin.sh
+    - name: check the built binaries carry the features we need
+      run: ./check_ltsmin.sh
     - name: list built files
       run: ls -lah website/
     - name: Deploy to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@v4.5.0
+      uses: JamesIves/github-pages-deploy-action@v4.9.0
       with:
           branch: gh-pages # The branch the action should deploy to.
           folder: website/ # The folder the action should deploy.
-          clean: true # Automatically remove deleted files from the deploy branch 
+          clean: true # Automatically remove deleted files from the deploy branch
           single-commit: true

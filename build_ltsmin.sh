@@ -35,7 +35,7 @@ export ZMQ_URL="https://github.com/zeromq/zeromq4-1/releases/download/v$ZMQ_VERS
 export DDD_NAME="ddd" &&
 export DDD_VERSION="$DDD_NAME-1.8.1" &&
 export DDD_URL="http://ddd.lip6.fr/download/$DDD_VERSION.tar.gz" &&
-export SYLVAN_VERSION="1.5.0" &&
+export SYLVAN_VERSION="1.8.1" &&
 export SYLVAN_URL="https://github.com/trolando/sylvan/archive/refs/tags/v$SYLVAN_VERSION.tar.gz" &&
 export SYLVAN_NAME="sylvan-$SYLVAN_VERSION" &&
 export MCRL2_NAME="mCRL2.tar.gz" &&
@@ -61,15 +61,14 @@ export C_INCLUDE_PATH="$DEPFOLDER/include:$C_INCLUDE_PATH"
 export LD_LIBRARY_PATH="$DEPFOLDER/lib:$LD_LIBRARY_PATH"
 
 # install Sylvan from source
-if [ ! -f "$DEPFOLDER/lib64/libsylvan.a" ]; then
+if [ ! -f "$DEPFOLDER/lib/libsylvan.a" ]; then
     mkdir -p sylvan && cd sylvan &&
     wget --progress=dot:mega "$SYLVAN_URL" &&
     tar -xf "v$SYLVAN_VERSION.tar.gz" &&
     cd sylvan-$SYLVAN_VERSION &&
-    wget https://github.com/trolando/sylvan/raw/master/src/sha2.c && mv sha2.c src/ &&
     mkdir -p build &&
     cd build &&
-    cmake .. -DBUILD_SHARED_LIBS=OFF -DSYLVAN_BUILD_EXAMPLES=OFF -DCMAKE_INSTALL_PREFIX="$DEPFOLDER" &&
+    cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DSYLVAN_BUILD_EXAMPLES=OFF -DSYLVAN_BUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX="$DEPFOLDER" &&
     make &&
     make install &&
     cd ../../..; 
@@ -82,7 +81,7 @@ if [ ! -f "$DEPFOLDER/lib/libxml2.a" ]; then
     wget --progress=dot:mega "$XML2_URL" &&
     tar -xf "v$XML2_VERSION.tar.gz" &&
     cd $XML2_NAME && autoreconf -vfi &&
-    ./configure --prefix=$DEPFOLDER --enable-static --without-iconv &&
+    ./configure --prefix=$DEPFOLDER --enable-static --without-iconv --without-python &&
     make &&
     make install &&
     cd ../..; 
@@ -149,9 +148,7 @@ fi
 # During make we can force ld to look in this directory first.
 # Now do the same on Linux.
 mkdir "$DEPFOLDER/static-libs" &&
-cp "$DEPFOLDER/lib/libzmq.a" "$DEPFOLDER/static-libs" &&
-cp "$DEPFOLDER/lib/libczmq.a" "$DEPFOLDER/static-libs" &&
-cp /usr/lib/libnuma.a "$DEPFOLDER/static-libs" &&
+cp /usr/lib/x86_64-linux-gnu/libnuma.a "$DEPFOLDER/static-libs" &&
 cp /usr/lib/x86_64-linux-gnu/libpopt.a "$DEPFOLDER/static-libs" &&
 cp /usr/lib/x86_64-linux-gnu/libgmp.a "$DEPFOLDER/static-libs" &&
 cp /usr/lib/x86_64-linux-gnu/libltdl.a "$DEPFOLDER/static-libs" &&
@@ -215,7 +212,7 @@ export LTSMIN_MEM_SIZE=$((4<<30))
 export SPOTCFLAGS="-I$ROOTDIR/usr/local/include/"
 export PKG_CONFIG_PATH="$ROOTDIR/usr/local/lib/pkgconfig/:$ROOTDIR/dep_dir/lib/pkgconfig/:$ROOTDIR/dep_dir/lib64/pkgconfig/"
 
-export CXXFLAGS=-std=c++17
+export CXXFLAGS=-std=c++20
 
 ./ltsminreconf &&
 ./configure -prefix=$IFOLDER --with-viennacl="$DEPFOLDER/include" --disable-scoop --without-mcrl --without-mcrl2 --disable-opaal --disable-prob --without-spins  --disable-dist --without-doxygen $CONFIGURE_WITH
